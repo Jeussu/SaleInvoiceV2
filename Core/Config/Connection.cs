@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaleInvoiceV2.Config
+namespace Core.Config
 {
     public class Connection
     {

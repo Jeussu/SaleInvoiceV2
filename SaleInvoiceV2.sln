@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleInvoiceV2", "SaleInvoiceV2\SaleInvoiceV2.csproj", "{C4F46BB8-624E-4192-A82F-FC912F1F24CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{1BB60E09-B2E8-4E57-98E2-DAB584DEE317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C4F46BB8-624E-4192-A82F-FC912F1F24CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4F46BB8-624E-4192-A82F-FC912F1F24CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4F46BB8-624E-4192-A82F-FC912F1F24CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB60E09-B2E8-4E57-98E2-DAB584DEE317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB60E09-B2E8-4E57-98E2-DAB584DEE317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB60E09-B2E8-4E57-98E2-DAB584DEE317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB60E09-B2E8-4E57-98E2-DAB584DEE317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

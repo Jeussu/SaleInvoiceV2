@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 
 namespace SaleInvoiceV2
 {
@@ -28,7 +30,7 @@ namespace SaleInvoiceV2
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                MessageHelper.ShowException(ex);
             }
         }
 
@@ -40,6 +42,18 @@ namespace SaleInvoiceV2
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.ShowException(ex);
+            }
         }
     }
 }
