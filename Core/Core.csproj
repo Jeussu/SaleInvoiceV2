@@ -48,10 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Connection.cs" />
+    <Compile Include="Helper\CollectionHelper.cs" />
     <Compile Include="Helper\DLHelper.cs" />
     <Compile Include="Helper\MessageHelper.cs" />
-    <Compile Include="Model\InvoiceItem_DetailModel.cs" />
-    <Compile Include="Model\SalesInvoices_MasterModel.cs" />
+    <Compile Include="Model\DbColumnModel.cs" />
+    <Compile Include="Model\InvoiceItems.cs" />
+    <Compile Include="Model\SalesInvoices.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Model
 {
-    public partial class InvoiceItem_DetailModel
+    public partial class InvoiceItems
     {
         public int Id { get; set; }
         public int InvoiceNumber { get; set; }
@@ -17,6 +17,6 @@ namespace Core.Model
         public decimal IntoMoney { get; set; }
         public decimal TotalMoney { get; set; }
         public DateTime InsertDate { get; set; }
-        public DateTime InserTime { get; set; }
+        public DateTime InsertTime { get; set; }
     }
 }

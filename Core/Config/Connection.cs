@@ -11,10 +11,15 @@ namespace Core.Config
     {
         public static SqlConnection ConnectToSQLDataBase()
         {
-            string connetionString = @"Data Source=DESKTOP-LOCO2LM;Initl Catalog=SaleInvoice;Integrated Security=True";
+            string connetionString = @"Data Source=DESKTOP-LOCO2LM;Initial Catalog=SaleInvoice;Integrated Security=True";
             SqlConnection cnnSql = new SqlConnection(connetionString);
-            cnnSql.Open();
+            cnnSql.Close();
             return cnnSql;
         }
     }
 }
+
+
+//DESKTOP-LOCO2LM
+//SaleInvoice
+//Integrated Security=True

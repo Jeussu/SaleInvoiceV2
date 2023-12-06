@@ -49,8 +49,7 @@ namespace SaleInvoiceV2
                 MessageHelper.ShowException(ex);
             }
         }
-        List<InvoiceItem_DetailModel> lstInvoice = new List<InvoiceItem_DetailModel>();
-
+        List<InvoiceItems> lstInvoice = new List<InvoiceItems>();
         private bool ValidateUI()
         {
             if (string.IsNullOrWhiteSpace(txtProductID.Text))
@@ -90,8 +89,8 @@ namespace SaleInvoiceV2
         {
             try
             {
-                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItem_DetailModel>;
-                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItem_DetailModel;
+                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItems>;
+                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
                 if (dtoSelect == null)
                 {
                     MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa.");
@@ -115,7 +114,7 @@ namespace SaleInvoiceV2
                 {
                     return;
                 }
-                var dto = new InvoiceItem_DetailModel();//
+                var dto = new InvoiceItems();//
                 dto.ProductID = Convert.ToInt32(txtProductID.Text);
                 dto.ProductName = txtProductName.Text;
                 dto.Quantity = Convert.ToInt32(txtQuantity.EditValue);
@@ -124,7 +123,7 @@ namespace SaleInvoiceV2
                 dto.TotalMoney = Convert.ToDecimal(txtTotalMoney.EditValue);
 
                 lstInvoice.Add(dto);
-                
+
                 txtProductID.EditValue = null;
                 txtProductName.Text = null;
                 txtQuantity.EditValue = null;
@@ -163,7 +162,47 @@ namespace SaleInvoiceV2
 
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            try
+            {
+                if (lstInvoice.IsNullOrEmpty())
+                {
+                    MessageHelper.ShowError("Vui lòng nhập hóa đơn để lưu");
+                    return;
+                }
 
+                // Save Master Invoice Information
+
+                var masterItem = new SalesInvoices();
+                masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+                masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
+                masterItem.CustomerId = Convert.ToInt32(txtCustomerID.EditValue);
+                masterItem.CustomerName = txtCustomerName.Text.Trim();
+                masterItem.Address = txtAddress.Text.Trim();
+                masterItem.InsertDate = DateTime.Now;
+                masterItem.InsertTime = DateTime.Now;
+
+                DLHelper.Insert(masterItem);
+
+                // Save Invoice Details
+                foreach (var item in lstInvoice)
+                {
+                    item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+
+                    item.InsertDate = DateTime.Now;
+                    item.InsertTime = DateTime.Now;
+
+                    DLHelper.Insert(item);
+                }
+
+
+                MessageHelper.ShowInfomation("Thực hiện thành công.");
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.ShowException(ex);
+            }
         }
+
     }
 }

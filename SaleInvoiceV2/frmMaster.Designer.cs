@@ -103,7 +103,7 @@
             // 
             // salesInvoicesMasterModelBindingSource
             // 
-            this.salesInvoicesMasterModelBindingSource.DataSource = typeof(Core.Model.SalesInvoices_MasterModel);
+            this.salesInvoicesMasterModelBindingSource.DataSource = typeof(Core.Model.SalesInvoices);
             // 
             // gridView1
             // 
@@ -370,7 +370,7 @@
             // 
             // invoiceItemDetailModelBindingSource
             // 
-            this.invoiceItemDetailModelBindingSource.DataSource = typeof(Core.Model.InvoiceItem_DetailModel);
+            this.invoiceItemDetailModelBindingSource.DataSource = typeof(Core.Model.InvoiceItems);
             // 
             // colProductID
             // 

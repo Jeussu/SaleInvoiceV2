@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDetails));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.dateEdit1 = new DevExpress.XtraEditors.DateEdit();
+            this.dteNgayBaoCao = new DevExpress.XtraEditors.DateEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -90,8 +90,8 @@
             this.colInserTime = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteNgayBaoCao.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteNgayBaoCao.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCustomerName.Properties)).BeginInit();
@@ -115,7 +115,7 @@
             // 
             // panelControl1
             // 
-            this.panelControl1.Controls.Add(this.dateEdit1);
+            this.panelControl1.Controls.Add(this.dteNgayBaoCao);
             this.panelControl1.Controls.Add(this.label7);
             this.panelControl1.Controls.Add(this.txtAddress);
             this.panelControl1.Controls.Add(this.label5);
@@ -131,23 +131,23 @@
             this.panelControl1.Size = new System.Drawing.Size(814, 58);
             this.panelControl1.TabIndex = 1;
             // 
-            // dateEdit1
+            // dteNgayBaoCao
             // 
-            this.dateEdit1.EditValue = null;
-            this.dateEdit1.Location = new System.Drawing.Point(277, 9);
-            this.dateEdit1.MenuManager = this.barManager1;
-            this.dateEdit1.Name = "dateEdit1";
-            this.dateEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteNgayBaoCao.EditValue = null;
+            this.dteNgayBaoCao.Location = new System.Drawing.Point(277, 9);
+            this.dteNgayBaoCao.MenuManager = this.barManager1;
+            this.dteNgayBaoCao.Name = "dteNgayBaoCao";
+            this.dteNgayBaoCao.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteNgayBaoCao.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit1.Properties.DisplayFormat.FormatString = "dd/MM/yyyy";
-            this.dateEdit1.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.dateEdit1.Properties.EditFormat.FormatString = "dd/MM/yyyy";
-            this.dateEdit1.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.dateEdit1.Properties.MaskSettings.Set("mask", "dd/MM/yyyy");
-            this.dateEdit1.Size = new System.Drawing.Size(113, 20);
-            this.dateEdit1.TabIndex = 3;
+            this.dteNgayBaoCao.Properties.DisplayFormat.FormatString = "dd/MM/yyyy";
+            this.dteNgayBaoCao.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dteNgayBaoCao.Properties.EditFormat.FormatString = "dd/MM/yyyy";
+            this.dteNgayBaoCao.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dteNgayBaoCao.Properties.MaskSettings.Set("mask", "dd/MM/yyyy");
+            this.dteNgayBaoCao.Size = new System.Drawing.Size(113, 20);
+            this.dteNgayBaoCao.TabIndex = 3;
             // 
             // barManager1
             // 
@@ -573,7 +573,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(Core.Model.InvoiceItem_DetailModel);
+            this.bindingSource1.DataSource = typeof(Core.Model.InvoiceItems);
             // 
             // gridView1
             // 
@@ -701,8 +701,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteNgayBaoCao.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteNgayBaoCao.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCustomerName.Properties)).EndInit();
@@ -775,7 +775,7 @@
         private DevExpress.XtraEditors.TextEdit txtProductID;
         private System.Windows.Forms.Label label8;
         private DevExpress.XtraBars.BarButtonItem btnAdd;
-        private DevExpress.XtraEditors.DateEdit dateEdit1;
+        private DevExpress.XtraEditors.DateEdit dteNgayBaoCao;
         private DevExpress.XtraEditors.SimpleButton btnThemMoi;
         private System.Windows.Forms.BindingSource bindingSource1;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
