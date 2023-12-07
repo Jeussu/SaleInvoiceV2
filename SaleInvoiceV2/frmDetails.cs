@@ -175,7 +175,7 @@ namespace SaleInvoiceV2
                 var masterItem = new SalesInvoices();
                 masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
                 masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
-                masterItem.CustomerId = Convert.ToInt32(txtCustomerID.EditValue);
+                masterItem.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
                 masterItem.CustomerName = txtCustomerName.Text.Trim();
                 masterItem.Address = txtAddress.Text.Trim();
                 masterItem.InsertDate = DateTime.Now;

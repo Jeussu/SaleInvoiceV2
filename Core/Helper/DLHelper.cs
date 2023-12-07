@@ -33,30 +33,7 @@ namespace Core.Helper
             return obj;
         }
 
-        //public static bool Insert(object source)
-        //{
-        //    // gen sql insert
-        //    var typeSoure = source.GetType();
-        //    string strTableName = GetNameDataTable(typeSoure);
-        //    var lstPropSource = typeSoure.GetProperties();
-        //    var lstFieldName = GetListColumnInDB(strTableName);
-        //    // loại bỏ trường ID
-        //    lstFieldName.RemoveAll(x => x.ToUpper().Equals("ID"));
-        //    string strSqlInser = "INSERT INTO " + strTableName + " (" + String.Join(",", lstFieldName) + ") VALUES ( " + BuilderSqlValue(source, lstFieldName) + ")";
 
-        //    //return cmd.ExecuteNonQuery() == 1 ? true : false;
-
-        //    var cmd = new SqlCommand(strSqlInser, Connection.ConnectToSQLDataBase());
-        //    cmd.CommandType = CommandType.Text;
-        //    var bInsert = cmd.ExecuteNonQuery() == 1 ? true : false;
-
-
-        //    //var cmdSql = new SqlCommand(strSqlInser, Connection.ConnectToSQLDataBase());
-        //    //cmdSql.CommandType = CommandType.Text;
-        //    //bInsert= cmdSql.ExecuteNonQuery() == 1 ? true : false;
-
-        //    return bInsert;
-        //}
 
         public static bool Insert(object source)
         {
@@ -91,7 +68,7 @@ namespace Core.Helper
                 using (var cmd = new SqlCommand(sqlInsert, connection))
                 {
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddRange(parameters.ToArray());
+                    cmd.Parameters.AddRange(parameters.ToArray()); //bỏ paramater
                     connection.Open();
                     return cmd.ExecuteNonQuery() == 1;
                 }
@@ -105,21 +82,7 @@ namespace Core.Helper
             return typeData.Name.Replace("Model", "");
         }
 
-        //public static List<string> GetListColumnInDB(string tableName)
-        //{
-        //    var lstResult = new List<string>();
-        //    string query = string.Format("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}'", tableName);
-        //    var cmd = new SqlCommand(query, Connection.ConnectToSQLDataBase());
-        //    using (var dr = cmd.ExecuteReader())
-        //    {
-        //        while (dr.Read())
-        //        {
-        //            var dtoResult = CreatDtoFromDataReader(typeof(DbColumnModel), dr) as DbColumnModel;
-        //            lstResult.Add(dtoResult.COLUMN_NAME);
-        //        }
-        //    }
-        //    return lstResult;
-        //}
+      
 
         public static List<string> GetListColumnInDB(string tableName)
         {

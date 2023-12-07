@@ -12,11 +12,12 @@ namespace Core.Model
         public int Id { get; set; }
         public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public int CustomerId { get; set; }
+        public int CustomerID { get; set; }
         public string CustomerName { get; set; }
         public string Address { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime InsertTime { get; set; }
-        
+   
+
     }
 }

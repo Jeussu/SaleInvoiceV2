@@ -33,12 +33,25 @@
             this.grcMaster = new DevExpress.XtraGrid.GridControl();
             this.salesInvoicesMasterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerId1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerName1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colAddress1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.grcDetails = new DevExpress.XtraGrid.GridControl();
+            this.invoiceItemDetailModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colProductID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colProductName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colUnitPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIntoMoney = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalMoney = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.dateEdit2 = new DevExpress.XtraEditors.DateEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.btnThemMoi = new DevExpress.XtraBars.BarButtonItem();
@@ -49,22 +62,12 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.dateEdit1 = new DevExpress.XtraEditors.DateEdit();
+            this.dtetoday = new DevExpress.XtraEditors.DateEdit();
+            this.dteFromday = new DevExpress.XtraEditors.DateEdit();
             this.btnTimKiem = new DevExpress.XtraEditors.SimpleButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
-            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerId1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerName1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAddress1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.invoiceItemDetailModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.colProductID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProductName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colUnitPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colIntoMoney = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTotalMoney = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grcMaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesInvoicesMasterModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -76,17 +79,17 @@
             this.splitContainerControl1.Panel2.SuspendLayout();
             this.splitContainerControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grcDetails)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceItemDetailModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit2.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.invoiceItemDetailModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // grcMaster
@@ -100,6 +103,7 @@
             this.grcMaster.TabIndex = 1;
             this.grcMaster.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
+            this.grcMaster.Click += new System.EventHandler(this.grcMaster_Click);
             // 
             // salesInvoicesMasterModelBindingSource
             // 
@@ -109,11 +113,49 @@
             // 
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colInvoiceNumber1,
+            this.colInvoiceDate,
             this.colCustomerId1,
             this.colCustomerName1,
             this.colAddress1});
             this.gridView1.GridControl = this.grcMaster;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowAutoFilterRow = true;
+            this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
+            // 
+            // colInvoiceNumber1
+            // 
+            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
+            this.colInvoiceNumber1.Visible = true;
+            this.colInvoiceNumber1.VisibleIndex = 0;
+            // 
+            // colInvoiceDate
+            // 
+            this.colInvoiceDate.FieldName = "InvoiceDate";
+            this.colInvoiceDate.Name = "colInvoiceDate";
+            this.colInvoiceDate.Visible = true;
+            this.colInvoiceDate.VisibleIndex = 1;
+            // 
+            // colCustomerId1
+            // 
+            this.colCustomerId1.FieldName = "CustomerId";
+            this.colCustomerId1.Name = "colCustomerId1";
+            this.colCustomerId1.Visible = true;
+            this.colCustomerId1.VisibleIndex = 2;
+            // 
+            // colCustomerName1
+            // 
+            this.colCustomerName1.FieldName = "CustomerName";
+            this.colCustomerName1.Name = "colCustomerName1";
+            this.colCustomerName1.Visible = true;
+            this.colCustomerName1.VisibleIndex = 3;
+            // 
+            // colAddress1
+            // 
+            this.colAddress1.FieldName = "Address";
+            this.colAddress1.Name = "colAddress1";
+            this.colAddress1.Visible = true;
+            this.colAddress1.VisibleIndex = 4;
             // 
             // splitContainerControl1
             // 
@@ -131,7 +173,7 @@
             // 
             this.splitContainerControl1.Panel2.Controls.Add(this.grcDetails);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(844, 394);
+            this.splitContainerControl1.Size = new System.Drawing.Size(844, 397);
             this.splitContainerControl1.SplitterPosition = 194;
             this.splitContainerControl1.TabIndex = 2;
             // 
@@ -142,14 +184,21 @@
             this.grcDetails.Location = new System.Drawing.Point(0, 0);
             this.grcDetails.MainView = this.gridView2;
             this.grcDetails.Name = "grcDetails";
-            this.grcDetails.Size = new System.Drawing.Size(844, 190);
+            this.grcDetails.Size = new System.Drawing.Size(844, 193);
             this.grcDetails.TabIndex = 2;
             this.grcDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
+            this.grcDetails.Click += new System.EventHandler(this.grcDetails_Click);
+            // 
+            // invoiceItemDetailModelBindingSource
+            // 
+            this.invoiceItemDetailModelBindingSource.DataSource = typeof(Core.Model.InvoiceItems);
             // 
             // gridView2
             // 
             this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colId,
+            this.colInvoiceNumber,
             this.colProductID,
             this.colProductName,
             this.colQuantity,
@@ -159,31 +208,74 @@
             this.gridView2.GridControl = this.grcDetails;
             this.gridView2.Name = "gridView2";
             // 
+            // colId
+            // 
+            this.colId.FieldName = "Id";
+            this.colId.Name = "colId";
+            this.colId.Visible = true;
+            this.colId.VisibleIndex = 0;
+            // 
+            // colInvoiceNumber
+            // 
+            this.colInvoiceNumber.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber.Name = "colInvoiceNumber";
+            this.colInvoiceNumber.Visible = true;
+            this.colInvoiceNumber.VisibleIndex = 1;
+            // 
+            // colProductID
+            // 
+            this.colProductID.FieldName = "ProductID";
+            this.colProductID.Name = "colProductID";
+            this.colProductID.Visible = true;
+            this.colProductID.VisibleIndex = 2;
+            // 
+            // colProductName
+            // 
+            this.colProductName.FieldName = "ProductName";
+            this.colProductName.Name = "colProductName";
+            this.colProductName.Visible = true;
+            this.colProductName.VisibleIndex = 3;
+            // 
+            // colQuantity
+            // 
+            this.colQuantity.FieldName = "Quantity";
+            this.colQuantity.Name = "colQuantity";
+            this.colQuantity.Visible = true;
+            this.colQuantity.VisibleIndex = 4;
+            // 
+            // colUnitPrice
+            // 
+            this.colUnitPrice.FieldName = "UnitPrice";
+            this.colUnitPrice.Name = "colUnitPrice";
+            this.colUnitPrice.Visible = true;
+            this.colUnitPrice.VisibleIndex = 5;
+            // 
+            // colIntoMoney
+            // 
+            this.colIntoMoney.FieldName = "IntoMoney";
+            this.colIntoMoney.Name = "colIntoMoney";
+            this.colIntoMoney.Visible = true;
+            this.colIntoMoney.VisibleIndex = 6;
+            // 
+            // colTotalMoney
+            // 
+            this.colTotalMoney.FieldName = "TotalMoney";
+            this.colTotalMoney.Name = "colTotalMoney";
+            this.colTotalMoney.Visible = true;
+            this.colTotalMoney.VisibleIndex = 7;
+            // 
             // panelControl1
             // 
-            this.panelControl1.Controls.Add(this.dateEdit2);
-            this.panelControl1.Controls.Add(this.dateEdit1);
+            this.panelControl1.Controls.Add(this.dtetoday);
+            this.panelControl1.Controls.Add(this.dteFromday);
             this.panelControl1.Controls.Add(this.btnTimKiem);
             this.panelControl1.Controls.Add(this.label2);
             this.panelControl1.Controls.Add(this.label1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 24);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(848, 37);
+            this.panelControl1.Size = new System.Drawing.Size(848, 34);
             this.panelControl1.TabIndex = 3;
-            // 
-            // dateEdit2
-            // 
-            this.dateEdit2.EditValue = null;
-            this.dateEdit2.Location = new System.Drawing.Point(225, 6);
-            this.dateEdit2.MenuManager = this.barManager1;
-            this.dateEdit2.Name = "dateEdit2";
-            this.dateEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit2.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit2.Size = new System.Drawing.Size(100, 20);
-            this.dateEdit2.TabIndex = 9;
             // 
             // barManager1
             // 
@@ -224,7 +316,7 @@
             this.btnThemMoi.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnThemMoi.ImageOptions.Image")));
             this.btnThemMoi.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnThemMoi.ImageOptions.LargeImage")));
             this.btnThemMoi.Name = "btnThemMoi";
-            this.btnThemMoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.btnThemMoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnThemMoi_ItemClick);
             // 
             // btnDelete
             // 
@@ -290,42 +382,57 @@
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 435);
             // 
-            // dateEdit1
+            // dtetoday
             // 
-            this.dateEdit1.EditValue = null;
-            this.dateEdit1.Location = new System.Drawing.Point(58, 6);
-            this.dateEdit1.MenuManager = this.barManager1;
-            this.dateEdit1.Name = "dateEdit1";
-            this.dateEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dtetoday.EditValue = null;
+            this.dtetoday.Location = new System.Drawing.Point(235, 6);
+            this.dtetoday.MenuManager = this.barManager1;
+            this.dtetoday.Name = "dtetoday";
+            this.dtetoday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dtetoday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit1.Size = new System.Drawing.Size(100, 20);
-            this.dateEdit1.TabIndex = 8;
+            this.dtetoday.Size = new System.Drawing.Size(100, 20);
+            this.dtetoday.TabIndex = 5;
+            this.dtetoday.EditValueChanged += new System.EventHandler(this.dtetoday_EditValueChanged);
+            // 
+            // dteFromday
+            // 
+            this.dteFromday.EditValue = null;
+            this.dteFromday.Location = new System.Drawing.Point(68, 6);
+            this.dteFromday.MenuManager = this.barManager1;
+            this.dteFromday.Name = "dteFromday";
+            this.dteFromday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dteFromday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dteFromday.Size = new System.Drawing.Size(100, 20);
+            this.dteFromday.TabIndex = 3;
+            this.dteFromday.EditValueChanged += new System.EventHandler(this.dteFromday_EditValueChanged);
             // 
             // btnTimKiem
             // 
             this.btnTimKiem.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnTimKiem.ImageOptions.Image")));
-            this.btnTimKiem.Location = new System.Drawing.Point(331, 4);
+            this.btnTimKiem.Location = new System.Drawing.Point(341, 4);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(75, 23);
-            this.btnTimKiem.TabIndex = 7;
+            this.btnTimKiem.TabIndex = 6;
             this.btnTimKiem.Text = "Tìm kiếm";
             this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(164, 7);
+            this.label2.Location = new System.Drawing.Point(174, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 4;
             this.label2.Text = "Đến ngày";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 8);
+            this.label1.Location = new System.Drawing.Point(15, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 2;
@@ -335,84 +442,10 @@
             // 
             this.panelControl2.Controls.Add(this.splitContainerControl1);
             this.panelControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl2.Location = new System.Drawing.Point(0, 61);
+            this.panelControl2.Location = new System.Drawing.Point(0, 58);
             this.panelControl2.Name = "panelControl2";
-            this.panelControl2.Size = new System.Drawing.Size(848, 398);
+            this.panelControl2.Size = new System.Drawing.Size(848, 401);
             this.panelControl2.TabIndex = 4;
-            // 
-            // colInvoiceNumber1
-            // 
-            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
-            this.colInvoiceNumber1.Visible = true;
-            this.colInvoiceNumber1.VisibleIndex = 0;
-            // 
-            // colCustomerId1
-            // 
-            this.colCustomerId1.FieldName = "CustomerId";
-            this.colCustomerId1.Name = "colCustomerId1";
-            this.colCustomerId1.Visible = true;
-            this.colCustomerId1.VisibleIndex = 1;
-            // 
-            // colCustomerName1
-            // 
-            this.colCustomerName1.FieldName = "CustomerName";
-            this.colCustomerName1.Name = "colCustomerName1";
-            this.colCustomerName1.Visible = true;
-            this.colCustomerName1.VisibleIndex = 2;
-            // 
-            // colAddress1
-            // 
-            this.colAddress1.FieldName = "Address";
-            this.colAddress1.Name = "colAddress1";
-            this.colAddress1.Visible = true;
-            this.colAddress1.VisibleIndex = 3;
-            // 
-            // invoiceItemDetailModelBindingSource
-            // 
-            this.invoiceItemDetailModelBindingSource.DataSource = typeof(Core.Model.InvoiceItems);
-            // 
-            // colProductID
-            // 
-            this.colProductID.FieldName = "ProductID";
-            this.colProductID.Name = "colProductID";
-            this.colProductID.Visible = true;
-            this.colProductID.VisibleIndex = 0;
-            // 
-            // colProductName
-            // 
-            this.colProductName.FieldName = "ProductName";
-            this.colProductName.Name = "colProductName";
-            this.colProductName.Visible = true;
-            this.colProductName.VisibleIndex = 1;
-            // 
-            // colQuantity
-            // 
-            this.colQuantity.FieldName = "Quantity";
-            this.colQuantity.Name = "colQuantity";
-            this.colQuantity.Visible = true;
-            this.colQuantity.VisibleIndex = 2;
-            // 
-            // colUnitPrice
-            // 
-            this.colUnitPrice.FieldName = "UnitPrice";
-            this.colUnitPrice.Name = "colUnitPrice";
-            this.colUnitPrice.Visible = true;
-            this.colUnitPrice.VisibleIndex = 3;
-            // 
-            // colIntoMoney
-            // 
-            this.colIntoMoney.FieldName = "IntoMoney";
-            this.colIntoMoney.Name = "colIntoMoney";
-            this.colIntoMoney.Visible = true;
-            this.colIntoMoney.VisibleIndex = 4;
-            // 
-            // colTotalMoney
-            // 
-            this.colTotalMoney.FieldName = "TotalMoney";
-            this.colTotalMoney.Name = "colTotalMoney";
-            this.colTotalMoney.Visible = true;
-            this.colTotalMoney.VisibleIndex = 5;
             // 
             // frmMaster
             // 
@@ -438,18 +471,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grcDetails)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invoiceItemDetailModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit2.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.invoiceItemDetailModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,8 +510,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraEditors.SimpleButton btnTimKiem;
-        private DevExpress.XtraEditors.DateEdit dateEdit2;
-        private DevExpress.XtraEditors.DateEdit dateEdit1;
+        private DevExpress.XtraEditors.DateEdit dtetoday;
+        private DevExpress.XtraEditors.DateEdit dteFromday;
         private System.Windows.Forms.BindingSource salesInvoicesMasterModelBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber1;
         private DevExpress.XtraGrid.Columns.GridColumn colCustomerId1;
@@ -491,6 +524,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn colUnitPrice;
         private DevExpress.XtraGrid.Columns.GridColumn colIntoMoney;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalMoney;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colId;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
     }
 }
 
