@@ -52,14 +52,13 @@ namespace Core.DL
             return lstResult.OrderByDescending(s => s.InvoiceDate).ToList();
         }
 
-        public static List<SalesInvoices> SearchInVoiceItemBySaleInvoice(int invoiceNumber)
+        public static List<InvoiceItems> SearchInVoiceItemBySaleInvoice(int invoiceNumber)
         {
-            var lstResult = new List<SalesInvoices>();
-            string strSql = string.Format(@"SELECT inv.*
+            var lstResult = new List<InvoiceItems>();
+            string strSql = string.Format(@"SELECT inv.InvoiceNumber, inv.ProductID, inv.ProductName, 
+                                           inv.Quantity, inv.UnitPrice, inv.IntoMoney, inv.TotalMoney
                                     FROM InvoiceItems AS inv                                  
-                                    WHERE 
-                                     inv.InvoiceNumber = {0}", invoiceNumber);
-
+                                    WHERE inv.InvoiceNumber = {0}", invoiceNumber);
 
             using (var connection = Connection.ConnectToSQLDataBase())
             {
@@ -72,22 +71,18 @@ namespace Core.DL
 
                     using (var dr = cmd.ExecuteReader())
                     {
-
-
                         while (dr.Read())
                         {
-                            var invoice = DLHelper.CreatDtoFromDataReader(typeof(SalesInvoices), dr) as SalesInvoices;
-
-
-                            lstResult.Add(invoice);
-
+                            var invoiceItem = DLHelper.CreatDtoFromDataReader(typeof(InvoiceItems), dr) as InvoiceItems;
+                            lstResult.Add(invoiceItem);
                         }
                     }
                 }
             }
 
-            return lstResult.OrderByDescending(s => s.InvoiceDate).ToList();
+            return lstResult; // Removed the OrderByDescending as InvoiceItems may not have an InvoiceDate field
         }
+
 
     }
 }

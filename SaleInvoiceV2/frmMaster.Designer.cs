@@ -33,11 +33,6 @@
             this.grcMaster = new DevExpress.XtraGrid.GridControl();
             this.salesInvoicesMasterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colInvoiceDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerId1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerName1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAddress1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.grcDetails = new DevExpress.XtraGrid.GridControl();
@@ -52,22 +47,28 @@
             this.colIntoMoney = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalMoney = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.dtetoday = new DevExpress.XtraEditors.DateEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.btnThemMoi = new DevExpress.XtraBars.BarButtonItem();
             this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarButtonItem();
+            this.btnEdit = new DevExpress.XtraBars.BarButtonItem();
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.dtetoday = new DevExpress.XtraEditors.DateEdit();
             this.dteFromday = new DevExpress.XtraEditors.DateEdit();
             this.btnTimKiem = new DevExpress.XtraEditors.SimpleButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grcMaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesInvoicesMasterModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -83,9 +84,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
@@ -114,48 +115,13 @@
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colInvoiceNumber1,
             this.colInvoiceDate,
-            this.colCustomerId1,
-            this.colCustomerName1,
-            this.colAddress1});
+            this.colCustomerID,
+            this.colCustomerName,
+            this.colAddress});
             this.gridView1.GridControl = this.grcMaster;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowAutoFilterRow = true;
             this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
-            // 
-            // colInvoiceNumber1
-            // 
-            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
-            this.colInvoiceNumber1.Visible = true;
-            this.colInvoiceNumber1.VisibleIndex = 0;
-            // 
-            // colInvoiceDate
-            // 
-            this.colInvoiceDate.FieldName = "InvoiceDate";
-            this.colInvoiceDate.Name = "colInvoiceDate";
-            this.colInvoiceDate.Visible = true;
-            this.colInvoiceDate.VisibleIndex = 1;
-            // 
-            // colCustomerId1
-            // 
-            this.colCustomerId1.FieldName = "CustomerId";
-            this.colCustomerId1.Name = "colCustomerId1";
-            this.colCustomerId1.Visible = true;
-            this.colCustomerId1.VisibleIndex = 2;
-            // 
-            // colCustomerName1
-            // 
-            this.colCustomerName1.FieldName = "CustomerName";
-            this.colCustomerName1.Name = "colCustomerName1";
-            this.colCustomerName1.Visible = true;
-            this.colCustomerName1.VisibleIndex = 3;
-            // 
-            // colAddress1
-            // 
-            this.colAddress1.FieldName = "Address";
-            this.colAddress1.Name = "colAddress1";
-            this.colAddress1.Visible = true;
-            this.colAddress1.VisibleIndex = 4;
             // 
             // splitContainerControl1
             // 
@@ -277,6 +243,26 @@
             this.panelControl1.Size = new System.Drawing.Size(848, 34);
             this.panelControl1.TabIndex = 3;
             // 
+            // dtetoday
+            // 
+            this.dtetoday.EditValue = null;
+            this.dtetoday.Location = new System.Drawing.Point(235, 6);
+            this.dtetoday.MenuManager = this.barManager1;
+            this.dtetoday.Name = "dtetoday";
+            this.dtetoday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtetoday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtetoday.Properties.DisplayFormat.FormatString = "dd/MM/yyyy";
+            this.dtetoday.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dtetoday.Properties.EditFormat.FormatString = "dd/MM/yyyy";
+            this.dtetoday.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dtetoday.Properties.FirstDayOfWeek = System.DayOfWeek.Monday;
+            this.dtetoday.Properties.MaskSettings.Set("mask", "dd/MM/yyyy");
+            this.dtetoday.Size = new System.Drawing.Size(100, 20);
+            this.dtetoday.TabIndex = 5;
+            this.dtetoday.EditValueChanged += new System.EventHandler(this.dtetoday_EditValueChanged);
+            // 
             // barManager1
             // 
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
@@ -290,9 +276,10 @@
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnThemMoi,
             this.btnDelete,
-            this.btnClose});
+            this.btnClose,
+            this.btnEdit});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 3;
+            this.barManager1.MaxItemId = 4;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar2
@@ -304,7 +291,8 @@
             this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnThemMoi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnDelete),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnClose)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnClose),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnEdit)});
             this.bar2.OptionsBar.MultiLine = true;
             this.bar2.OptionsBar.UseWholeRow = true;
             this.bar2.Text = "Main menu";
@@ -337,6 +325,15 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Caption = "Sửa";
+            this.btnEdit.Id = 3;
+            this.btnEdit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnEdit.ImageOptions.SvgImage")));
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEdit_ItemClick);
             // 
             // bar3
             // 
@@ -382,20 +379,6 @@
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 435);
             // 
-            // dtetoday
-            // 
-            this.dtetoday.EditValue = null;
-            this.dtetoday.Location = new System.Drawing.Point(235, 6);
-            this.dtetoday.MenuManager = this.barManager1;
-            this.dtetoday.Name = "dtetoday";
-            this.dtetoday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtetoday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtetoday.Size = new System.Drawing.Size(100, 20);
-            this.dtetoday.TabIndex = 5;
-            this.dtetoday.EditValueChanged += new System.EventHandler(this.dtetoday_EditValueChanged);
-            // 
             // dteFromday
             // 
             this.dteFromday.EditValue = null;
@@ -406,6 +389,12 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dteFromday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dteFromday.Properties.DisplayFormat.FormatString = "dd/MM/yyyy";
+            this.dteFromday.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dteFromday.Properties.EditFormat.FormatString = "dd/MM/yyyy";
+            this.dteFromday.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dteFromday.Properties.FirstDayOfWeek = System.DayOfWeek.Monday;
+            this.dteFromday.Properties.MaskSettings.Set("mask", "dd/MM/yyyy");
             this.dteFromday.Size = new System.Drawing.Size(100, 20);
             this.dteFromday.TabIndex = 3;
             this.dteFromday.EditValueChanged += new System.EventHandler(this.dteFromday_EditValueChanged);
@@ -447,6 +436,46 @@
             this.panelControl2.Size = new System.Drawing.Size(848, 401);
             this.panelControl2.TabIndex = 4;
             // 
+            // colInvoiceNumber1
+            // 
+            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
+            this.colInvoiceNumber1.OptionsColumn.AllowEdit = false;
+            this.colInvoiceNumber1.Visible = true;
+            this.colInvoiceNumber1.VisibleIndex = 0;
+            // 
+            // colInvoiceDate
+            // 
+            this.colInvoiceDate.FieldName = "InvoiceDate";
+            this.colInvoiceDate.Name = "colInvoiceDate";
+            this.colInvoiceDate.OptionsColumn.AllowEdit = false;
+            this.colInvoiceDate.Visible = true;
+            this.colInvoiceDate.VisibleIndex = 1;
+            // 
+            // colCustomerID
+            // 
+            this.colCustomerID.FieldName = "CustomerID";
+            this.colCustomerID.Name = "colCustomerID";
+            this.colCustomerID.OptionsColumn.AllowEdit = false;
+            this.colCustomerID.Visible = true;
+            this.colCustomerID.VisibleIndex = 2;
+            // 
+            // colCustomerName
+            // 
+            this.colCustomerName.FieldName = "CustomerName";
+            this.colCustomerName.Name = "colCustomerName";
+            this.colCustomerName.OptionsColumn.AllowEdit = false;
+            this.colCustomerName.Visible = true;
+            this.colCustomerName.VisibleIndex = 3;
+            // 
+            // colAddress
+            // 
+            this.colAddress.FieldName = "Address";
+            this.colAddress.Name = "colAddress";
+            this.colAddress.OptionsColumn.AllowEdit = false;
+            this.colAddress.Visible = true;
+            this.colAddress.VisibleIndex = 4;
+            // 
             // frmMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -460,6 +489,7 @@
             this.Controls.Add(this.barDockControlTop);
             this.Name = "frmMaster";
             this.Text = "Manage SaleInvoice";
+            this.Load += new System.EventHandler(this.frmMaster_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grcMaster)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesInvoicesMasterModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -476,9 +506,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtetoday.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteFromday.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
@@ -513,10 +543,6 @@
         private DevExpress.XtraEditors.DateEdit dtetoday;
         private DevExpress.XtraEditors.DateEdit dteFromday;
         private System.Windows.Forms.BindingSource salesInvoicesMasterModelBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber1;
-        private DevExpress.XtraGrid.Columns.GridColumn colCustomerId1;
-        private DevExpress.XtraGrid.Columns.GridColumn colCustomerName1;
-        private DevExpress.XtraGrid.Columns.GridColumn colAddress1;
         private System.Windows.Forms.BindingSource invoiceItemDetailModelBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colProductID;
         private DevExpress.XtraGrid.Columns.GridColumn colProductName;
@@ -524,9 +550,14 @@
         private DevExpress.XtraGrid.Columns.GridColumn colUnitPrice;
         private DevExpress.XtraGrid.Columns.GridColumn colIntoMoney;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalMoney;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceDate;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
+        private DevExpress.XtraBars.BarButtonItem btnEdit;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber1;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colCustomerID;
+        private DevExpress.XtraGrid.Columns.GridColumn colCustomerName;
+        private DevExpress.XtraGrid.Columns.GridColumn colAddress;
     }
 }
 
