@@ -1,4 +1,5 @@
-﻿using Core.DL;
+﻿using Core.Config;
+using Core.DL;
 using Core.Helper;
 using Core.Model;
 using SaleInvoiceV2.Common;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -39,37 +41,48 @@ namespace SaleInvoiceV2
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            
-                try
+            try
+            {
+                var selectedInvoice = GetSelectedInvoice();
+                if (selectedInvoice == null)
                 {
-                    var lstAll = grcMaster.DataSource as List<SalesInvoices>;
-                    var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices;
-                    if (dtoSelect == null)
-                    {
-                        MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa.");
-                        return;
-                    }
-                    lstAll.Remove(dtoSelect);
-                    grcMaster.DataSource = lstAll;
-                    grcMaster.RefreshDataSource();
+                    MessageHelper.ShowError("Please select an invoice to delete.");
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    MessageHelper.ShowException(ex);
-                }
-            
+
+                // Delete associated invoice items from the database
+                InvoiceDL.DeleteInvoiceItemsByInvoiceNumber(selectedInvoice.InvoiceNumber);
+
+                // Delete the invoice from the database
+                InvoiceDL.DeleteInvoice(selectedInvoice.Id);
+
+                // Update grcMaster
+                var lstAllInvoices = grcMaster.DataSource as List<SalesInvoices>;
+                lstAllInvoices.Remove(selectedInvoice);
+                grcMaster.DataSource = lstAllInvoices;
+                grcMaster.RefreshDataSource();
+
+                // Clear grcDetails as the details of the deleted invoice are no longer relevant
+                grcDetails.DataSource = null;
+                grcDetails.RefreshDataSource();
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.ShowException(ex);
+            }
         }
+
         //Convert.ToInt32(txtInvoiceNumber.EditValue);
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             try
-            {   
-                    var frDate = dteFromday.DateTime.Date;
-                    var toDate = dtetoday.DateTime.Date;
-                    var lstSaleInvoice = InvoiceDL.SearchInVoiceNumber(frDate, toDate) as List<SalesInvoices>;
-                    //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
-                    grcMaster.DataSource = lstSaleInvoice;
-            
+            {
+                var frDate = dteFromday.DateTime.Date;
+                var toDate = dtetoday.DateTime.Date;
+                var lstSaleInvoice = InvoiceDL.SearchInVoiceNumber(frDate, toDate) as List<SalesInvoices>;
+                //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
+                grcMaster.DataSource = lstSaleInvoice;
+
             }
             catch (Exception ex)
             {
@@ -113,7 +126,7 @@ namespace SaleInvoiceV2
             {
                 // Get the handle of the first selected row
                 int selectedRowHandle = view.GetSelectedRows()[0];
-                
+
                 // Fetch the SalesInvoices object from the selected row
                 var selectedInvoice = view.GetRow(selectedRowHandle) as SalesInvoices;
 
@@ -158,7 +171,7 @@ namespace SaleInvoiceV2
                 return;
             }
             var lstSaleInvoice = InvoiceDL.SearchInVoiceItemBySaleInvoice(dtoSelect.InvoiceNumber);
-            
+
             //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
             grcDetails.DataSource = lstSaleInvoice;
 
@@ -169,11 +182,11 @@ namespace SaleInvoiceV2
             dteFromday.DateTime = DateTime.Now;
             dtetoday.DateTime = DateTime.Now;
         }
-        
+
         private void btnEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             OpenEditForm();
             //RefreshData(); // Refresh the data in frmMaster to reflect changes
         }
     }
-} 
+}

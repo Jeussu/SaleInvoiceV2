@@ -82,7 +82,44 @@ namespace Core.DL
 
             return lstResult; // Removed the OrderByDescending as InvoiceItems may not have an InvoiceDate field
         }
+        public static bool DeleteInvoiceItemsByInvoiceNumber(int invoiceNumber)
+        {
+            string strSql = "DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
 
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(strSql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@InvoiceNumber", invoiceNumber);
+
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public static bool DeleteInvoice(int invoiceId)
+        {
+            string strSql = "DELETE FROM SalesInvoices WHERE Id = @InvoiceId";
+
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(strSql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
+
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
 
     }
-}
+} 
