@@ -55,7 +55,7 @@ namespace Core.DL
         public static List<InvoiceItems> SearchInVoiceItemBySaleInvoice(int invoiceNumber)
         {
             var lstResult = new List<InvoiceItems>();
-            string strSql = string.Format(@"SELECT inv.InvoiceNumber, inv.ProductID, inv.ProductName, 
+            string strSql = string.Format(@"SELECT inv.Id, inv.InvoiceNumber, inv.ProductID, inv.ProductName, 
                                            inv.Quantity, inv.UnitPrice, inv.IntoMoney, inv.TotalMoney
                                     FROM InvoiceItems AS inv                                  
                                     WHERE inv.InvoiceNumber = {0}", invoiceNumber);

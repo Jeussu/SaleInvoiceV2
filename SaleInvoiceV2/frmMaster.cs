@@ -96,7 +96,7 @@ namespace SaleInvoiceV2
             {
                 frmEdit editForm = new frmEdit(selectedInvoice);
                 editForm.ShowDialog();
-                
+                //grcMaster.RefreshDataSource();
             }
             else
             {

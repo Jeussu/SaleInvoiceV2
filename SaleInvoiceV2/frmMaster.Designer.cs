@@ -33,6 +33,11 @@
             this.grcMaster = new DevExpress.XtraGrid.GridControl();
             this.salesInvoicesMasterModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCustomerName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.grcDetails = new DevExpress.XtraGrid.GridControl();
@@ -64,11 +69,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
-            this.colInvoiceNumber1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colInvoiceDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCustomerName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grcMaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesInvoicesMasterModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -122,6 +122,46 @@
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowAutoFilterRow = true;
             this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
+            // 
+            // colInvoiceNumber1
+            // 
+            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
+            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
+            this.colInvoiceNumber1.OptionsColumn.AllowEdit = false;
+            this.colInvoiceNumber1.Visible = true;
+            this.colInvoiceNumber1.VisibleIndex = 0;
+            // 
+            // colInvoiceDate
+            // 
+            this.colInvoiceDate.FieldName = "InvoiceDate";
+            this.colInvoiceDate.Name = "colInvoiceDate";
+            this.colInvoiceDate.OptionsColumn.AllowEdit = false;
+            this.colInvoiceDate.Visible = true;
+            this.colInvoiceDate.VisibleIndex = 1;
+            // 
+            // colCustomerID
+            // 
+            this.colCustomerID.FieldName = "CustomerID";
+            this.colCustomerID.Name = "colCustomerID";
+            this.colCustomerID.OptionsColumn.AllowEdit = false;
+            this.colCustomerID.Visible = true;
+            this.colCustomerID.VisibleIndex = 2;
+            // 
+            // colCustomerName
+            // 
+            this.colCustomerName.FieldName = "CustomerName";
+            this.colCustomerName.Name = "colCustomerName";
+            this.colCustomerName.OptionsColumn.AllowEdit = false;
+            this.colCustomerName.Visible = true;
+            this.colCustomerName.VisibleIndex = 3;
+            // 
+            // colAddress
+            // 
+            this.colAddress.FieldName = "Address";
+            this.colAddress.Name = "colAddress";
+            this.colAddress.OptionsColumn.AllowEdit = false;
+            this.colAddress.Visible = true;
+            this.colAddress.VisibleIndex = 4;
             // 
             // splitContainerControl1
             // 
@@ -178,6 +218,8 @@
             // 
             this.colId.FieldName = "Id";
             this.colId.Name = "colId";
+            this.colId.OptionsColumn.AllowEdit = false;
+            this.colId.OptionsColumn.ReadOnly = true;
             this.colId.Visible = true;
             this.colId.VisibleIndex = 0;
             // 
@@ -185,6 +227,8 @@
             // 
             this.colInvoiceNumber.FieldName = "InvoiceNumber";
             this.colInvoiceNumber.Name = "colInvoiceNumber";
+            this.colInvoiceNumber.OptionsColumn.AllowEdit = false;
+            this.colInvoiceNumber.OptionsColumn.ReadOnly = true;
             this.colInvoiceNumber.Visible = true;
             this.colInvoiceNumber.VisibleIndex = 1;
             // 
@@ -192,6 +236,8 @@
             // 
             this.colProductID.FieldName = "ProductID";
             this.colProductID.Name = "colProductID";
+            this.colProductID.OptionsColumn.AllowEdit = false;
+            this.colProductID.OptionsColumn.ReadOnly = true;
             this.colProductID.Visible = true;
             this.colProductID.VisibleIndex = 2;
             // 
@@ -199,6 +245,8 @@
             // 
             this.colProductName.FieldName = "ProductName";
             this.colProductName.Name = "colProductName";
+            this.colProductName.OptionsColumn.AllowEdit = false;
+            this.colProductName.OptionsColumn.ReadOnly = true;
             this.colProductName.Visible = true;
             this.colProductName.VisibleIndex = 3;
             // 
@@ -206,6 +254,8 @@
             // 
             this.colQuantity.FieldName = "Quantity";
             this.colQuantity.Name = "colQuantity";
+            this.colQuantity.OptionsColumn.AllowEdit = false;
+            this.colQuantity.OptionsColumn.ReadOnly = true;
             this.colQuantity.Visible = true;
             this.colQuantity.VisibleIndex = 4;
             // 
@@ -213,6 +263,8 @@
             // 
             this.colUnitPrice.FieldName = "UnitPrice";
             this.colUnitPrice.Name = "colUnitPrice";
+            this.colUnitPrice.OptionsColumn.AllowEdit = false;
+            this.colUnitPrice.OptionsColumn.ReadOnly = true;
             this.colUnitPrice.Visible = true;
             this.colUnitPrice.VisibleIndex = 5;
             // 
@@ -220,6 +272,8 @@
             // 
             this.colIntoMoney.FieldName = "IntoMoney";
             this.colIntoMoney.Name = "colIntoMoney";
+            this.colIntoMoney.OptionsColumn.AllowEdit = false;
+            this.colIntoMoney.OptionsColumn.ReadOnly = true;
             this.colIntoMoney.Visible = true;
             this.colIntoMoney.VisibleIndex = 6;
             // 
@@ -227,6 +281,8 @@
             // 
             this.colTotalMoney.FieldName = "TotalMoney";
             this.colTotalMoney.Name = "colTotalMoney";
+            this.colTotalMoney.OptionsColumn.AllowEdit = false;
+            this.colTotalMoney.OptionsColumn.ReadOnly = true;
             this.colTotalMoney.Visible = true;
             this.colTotalMoney.VisibleIndex = 7;
             // 
@@ -435,46 +491,6 @@
             this.panelControl2.Name = "panelControl2";
             this.panelControl2.Size = new System.Drawing.Size(848, 401);
             this.panelControl2.TabIndex = 4;
-            // 
-            // colInvoiceNumber1
-            // 
-            this.colInvoiceNumber1.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber1.Name = "colInvoiceNumber1";
-            this.colInvoiceNumber1.OptionsColumn.AllowEdit = false;
-            this.colInvoiceNumber1.Visible = true;
-            this.colInvoiceNumber1.VisibleIndex = 0;
-            // 
-            // colInvoiceDate
-            // 
-            this.colInvoiceDate.FieldName = "InvoiceDate";
-            this.colInvoiceDate.Name = "colInvoiceDate";
-            this.colInvoiceDate.OptionsColumn.AllowEdit = false;
-            this.colInvoiceDate.Visible = true;
-            this.colInvoiceDate.VisibleIndex = 1;
-            // 
-            // colCustomerID
-            // 
-            this.colCustomerID.FieldName = "CustomerID";
-            this.colCustomerID.Name = "colCustomerID";
-            this.colCustomerID.OptionsColumn.AllowEdit = false;
-            this.colCustomerID.Visible = true;
-            this.colCustomerID.VisibleIndex = 2;
-            // 
-            // colCustomerName
-            // 
-            this.colCustomerName.FieldName = "CustomerName";
-            this.colCustomerName.Name = "colCustomerName";
-            this.colCustomerName.OptionsColumn.AllowEdit = false;
-            this.colCustomerName.Visible = true;
-            this.colCustomerName.VisibleIndex = 3;
-            // 
-            // colAddress
-            // 
-            this.colAddress.FieldName = "Address";
-            this.colAddress.Name = "colAddress";
-            this.colAddress.OptionsColumn.AllowEdit = false;
-            this.colAddress.Visible = true;
-            this.colAddress.VisibleIndex = 4;
             // 
             // frmMaster
             // 

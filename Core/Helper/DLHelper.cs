@@ -75,6 +75,23 @@ namespace Core.Helper
             }
         }
 
+        public static bool Update(object source)
+        {
+            var typeSource = source.GetType();
+            string strTableName = GetNameDataTable(typeSource);
+            var lstPropSource = typeSource.GetProperties();
+            var lstFieldName = GetListColumnInDB(strTableName);
+            string strSqlUpdate = "UPDATE " + GetNameDataTable(typeSource) + " SET " + BuilderSqlValue(source, lstFieldName, true);
+
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(strSqlUpdate, connection))
+                {
+                    connection.Open(); // Open the connection
+                    return cmd.ExecuteNonQuery() == 1;
+                }
+            }
+        }
 
 
         public static string GetNameDataTable(Type typeData)
@@ -148,7 +165,7 @@ namespace Core.Helper
                         strValue += prop.GetValue(dtoSource).ToString();
                         break;
                     case "datetime":
-                        strValue += "'" + Convert.ToDateTime(prop.GetValue(dtoSource)).ToString("yyyy/MM/dd HH:mm") + "'";
+                        strValue += "'" + Convert.ToDateTime(prop.GetValue(dtoSource)).ToString("yyyy-MM-dd HH:mm") + "'";
                         break;
                     case "boolean":
                         strValue += "'" + ((Boolean)prop.GetValue(dtoSource) == false ? "0" : "1") + "'";//

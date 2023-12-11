@@ -1,4 +1,5 @@
-﻿using Core.DL;
+﻿using Core.Config;
+using Core.DL;
 using Core.Helper;
 using Core.Model;
 using DevExpress.Skins;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,7 +29,7 @@ namespace SaleInvoiceV2
 
         private void label6_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -56,7 +58,10 @@ namespace SaleInvoiceV2
                     txtAddress.Text = _invoiceToEdit.Address;
 
                     // Load InvoiceItems related to this invoice
-                    LoadInvoiceItems(_invoiceToEdit.InvoiceNumber);
+                    //LoadInvoiceItems(_invoiceToEdit.InvoiceNumber);
+                    lstInvoice = InvoiceDL.SearchInVoiceItemBySaleInvoice(_invoiceToEdit.InvoiceNumber);
+                    grcInvoiceDetail.DataSource = lstInvoice;
+                    grcInvoiceDetail.RefreshDataSource();
                 }
             }
             catch (Exception ex)
@@ -118,18 +123,37 @@ namespace SaleInvoiceV2
                 var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
                 if (dtoSelect == null)
                 {
-                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa.");
+                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa");
                     return;
                 }
                 lstAll.Remove(dtoSelect);
+                DeleteInvoiceItem(dtoSelect);
+
                 grcInvoiceDetail.DataSource = lstAll;
                 grcInvoiceDetail.RefreshDataSource();
             }
             catch (Exception ex)
             {
+
                 MessageHelper.ShowException(ex);
             }
         }
+
+        public static bool DeleteInvoiceItem(InvoiceItems item)
+        {
+            string sqlDelete = $"DELETE FROM InvoiceItems WHERE Id = @Id";
+
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(sqlDelete, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Id", item.Id);
+                    connection.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
 
         private void btnThemMoi_Click(object sender, EventArgs e)
         {
@@ -139,6 +163,7 @@ namespace SaleInvoiceV2
                 {
                     return;
                 }
+                // Create and populate a new InvoiceItems object
                 var dto = new InvoiceItems();//
                 dto.ProductID = Convert.ToInt32(txtProductID.Text);
                 dto.ProductName = txtProductName.Text;
@@ -146,7 +171,7 @@ namespace SaleInvoiceV2
                 dto.UnitPrice = Convert.ToDecimal(txtQuantity.EditValue);
                 dto.IntoMoney = Convert.ToDecimal(txtIntoMoney.EditValue);
                 dto.TotalMoney = Convert.ToDecimal(txtTotalMoney.EditValue);
-
+                // Add the new item to lstInvoice and refresh grcInvoiceDetail
                 lstInvoice.Add(dto);
 
                 txtProductID.EditValue = null;
@@ -156,6 +181,7 @@ namespace SaleInvoiceV2
                 txtIntoMoney.EditValue = null;
                 txtTotalMoney.EditValue = null;
 
+                grcInvoiceDetail.DataSource = null;
                 grcInvoiceDetail.DataSource = lstInvoice;
                 grcInvoiceDetail.RefreshDataSource();
             }
@@ -185,40 +211,77 @@ namespace SaleInvoiceV2
             }
         }
 
+        private SalesInvoices CreateInvoiceFromFormFields()
+        {
+            var newInvoice = new SalesInvoices
+            {
+                InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue),
+                InvoiceDate = dteNgayBaoCao.DateTime != DateTime.MinValue ? dteNgayBaoCao.DateTime : DateTime.Now,
+                CustomerID = Convert.ToInt32(txtCustomerID.EditValue),
+                CustomerName = txtCustomerName.Text,
+                Address = txtAddress.Text,
+                InsertDate = DateTime.Now,
+                InsertTime = DateTime.Now
+                // Add other fields as necessary
+            };
+
+            return newInvoice;
+        }
+
+
+        private void UpdateInvoiceFromFormFields(SalesInvoices invoice)
+        {
+            invoice.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+            invoice.InvoiceDate = dteNgayBaoCao.DateTime != DateTime.MinValue ? dteNgayBaoCao.DateTime : DateTime.Now;
+            invoice.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
+            invoice.CustomerName = txtCustomerName.Text;
+            invoice.Address = txtAddress.Text;
+            invoice.InsertDate = DateTime.Now;
+            invoice.InsertTime = DateTime.Now;
+            // Add other fields as necessary
+        }
+
+
+
+
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             try
             {
-                if (lstInvoice.IsNullOrEmpty())
+                if (_invoiceToEdit != null)
                 {
-                    MessageHelper.ShowError("Vui lòng nhập hóa đơn để lưu");
-                    return;
+                    UpdateInvoiceFromFormFields(_invoiceToEdit);
+                    DLHelper.Update(_invoiceToEdit); // Update the invoice
+                }
+                else
+                {
+                    var newInvoice = CreateInvoiceFromFormFields();
+                    DLHelper.Insert(newInvoice); // Insert new invoice
                 }
 
-                // Save Master Invoice Information
-
-                var masterItem = new SalesInvoices();
-                masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
-                masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
-                masterItem.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
-                masterItem.CustomerName = txtCustomerName.Text.Trim();
-                masterItem.Address = txtAddress.Text.Trim();
-                masterItem.InsertDate = DateTime.Now;
-                masterItem.InsertTime = DateTime.Now;
-
-                DLHelper.Insert(masterItem);
-
-                // Save Invoice Details
+                // Save InvoiceItems
                 foreach (var item in lstInvoice)
                 {
                     item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+                    // Ensure DateTime fields are within the valid range
+                    if (item.InsertDate < new DateTime(1753, 1, 1))
+                    {
+                        item.InsertDate = DateTime.Now;
+                    }
+                    if (item.InsertTime < new DateTime(1753, 1, 1))
+                    {
+                        item.InsertTime = DateTime.Now;
+                    }
 
-                    item.InsertDate = DateTime.Now;
-                    item.InsertTime = DateTime.Now;
-
-                    DLHelper.Insert(item);
+                    if (item.Id == 0) // Assuming '0' or 'null' means the item is new
+                    {
+                        DLHelper.Insert(item);
+                    }
+                    else
+                    {
+                        DLHelper.Update(item);
+                    }
                 }
-
 
                 MessageHelper.ShowInfomation("Thực hiện thành công.");
                 DialogResult = DialogResult.OK;
@@ -229,9 +292,58 @@ namespace SaleInvoiceV2
             }
         }
 
+
+
+
+
+        //private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (lstInvoice.IsNullOrEmpty())
+        //        {
+        //            MessageHelper.ShowError("Vui lòng nhập hóa đơn để lưu");
+        //            return;
+        //        }
+
+        //        // Save Master Invoice Information
+
+        //        var masterItem = new SalesInvoices();
+        //        masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+        //        masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
+        //        masterItem.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
+        //        masterItem.CustomerName = txtCustomerName.Text.Trim();
+        //        masterItem.Address = txtAddress.Text.Trim();
+        //        masterItem.InsertDate = DateTime.Now;
+        //        masterItem.InsertTime = DateTime.Now;
+
+        //        DLHelper.Insert(masterItem);
+
+        //        // Save Invoice Details
+        //        foreach (var item in lstInvoice)
+        //        {
+        //            item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+
+        //            item.InsertDate = DateTime.Now;
+        //            item.InsertTime = DateTime.Now;
+
+        //            DLHelper.Insert(item);
+        //        }
+
+
+        //        MessageHelper.ShowInfomation("Thực hiện thành công.");
+        //        DialogResult = DialogResult.OK;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageHelper.ShowException(ex);
+        //    }
+        //}
+
         private void grcInvoiceDetail_Click(object sender, EventArgs e)
         {
 
         }
     }
-} 
+}
+

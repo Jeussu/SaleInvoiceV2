@@ -18,5 +18,6 @@ namespace Core.Model
         public decimal TotalMoney { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime InsertTime { get; set; }
+        
     }
 }
