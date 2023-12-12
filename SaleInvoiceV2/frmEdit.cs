@@ -20,6 +20,7 @@ namespace SaleInvoiceV2
     public partial class frmEdit : Form
     {
         private SalesInvoices _invoiceToEdit; // Private field to hold the invoice data
+        private List<InvoiceItems> deletedItems = new List<InvoiceItems>();
         public frmEdit(SalesInvoices invoiceToEdit)
         {
             InitializeComponent();
@@ -115,44 +116,7 @@ namespace SaleInvoiceV2
             return true;
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            try
-            {
-                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItems>;
-                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
-                if (dtoSelect == null)
-                {
-                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa");
-                    return;
-                }
-                lstAll.Remove(dtoSelect);
-                DeleteInvoiceItem(dtoSelect);
 
-                grcInvoiceDetail.DataSource = lstAll;
-                grcInvoiceDetail.RefreshDataSource();
-            }
-            catch (Exception ex)
-            {
-
-                MessageHelper.ShowException(ex);
-            }
-        }
-
-        public static bool DeleteInvoiceItem(InvoiceItems item)
-        {
-            string sqlDelete = $"DELETE FROM InvoiceItems WHERE Id = @Id";
-
-            using (var connection = Connection.ConnectToSQLDataBase())
-            {
-                using (var cmd = new SqlCommand(sqlDelete, connection))
-                {
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
-                    connection.Open();
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-        }
 
 
         private void btnThemMoi_Click(object sender, EventArgs e)
@@ -242,6 +206,49 @@ namespace SaleInvoiceV2
         }
 
 
+        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItems>;
+                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
+                if (dtoSelect == null)
+                {
+                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa");
+                    return;
+                }
+                lstAll.Remove(dtoSelect);
+
+                // Refresh the GridControl with the updated list
+                grcInvoiceDetail.DataSource = lstAll;
+                grcInvoiceDetail.RefreshDataSource();
+                deletedItems.Add(dtoSelect);
+            }
+
+            catch (Exception ex)
+            {
+                MessageHelper.ShowException(ex);
+            }
+        }
+
+
+        public static bool DeleteInvoiceItem(InvoiceItems item)
+        {
+            string sqlDelete = $"DELETE FROM InvoiceItems WHERE Id = @Id";
+
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(sqlDelete, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Id", item.Id);
+                    connection.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+
+
 
 
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -263,24 +270,22 @@ namespace SaleInvoiceV2
                 foreach (var item in lstInvoice)
                 {
                     item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
-                    // Ensure DateTime fields are within the valid range
                     if (item.InsertDate < new DateTime(1753, 1, 1))
-                    {
                         item.InsertDate = DateTime.Now;
-                    }
                     if (item.InsertTime < new DateTime(1753, 1, 1))
-                    {
                         item.InsertTime = DateTime.Now;
-                    }
 
                     if (item.Id == 0) // Assuming '0' or 'null' means the item is new
-                    {
                         DLHelper.Insert(item);
-                    }
                     else
-                    {
                         DLHelper.Update(item);
-                    }
+                }
+
+                // Delete removed items
+                foreach (var item in deletedItems)
+                {
+                    DLHelper.DeleteInvoiceItem(item);
+
                 }
 
                 MessageHelper.ShowInfomation("Thực hiện thành công.");
@@ -292,53 +297,6 @@ namespace SaleInvoiceV2
             }
         }
 
-
-
-
-
-        //private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (lstInvoice.IsNullOrEmpty())
-        //        {
-        //            MessageHelper.ShowError("Vui lòng nhập hóa đơn để lưu");
-        //            return;
-        //        }
-
-        //        // Save Master Invoice Information
-
-        //        var masterItem = new SalesInvoices();
-        //        masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
-        //        masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
-        //        masterItem.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
-        //        masterItem.CustomerName = txtCustomerName.Text.Trim();
-        //        masterItem.Address = txtAddress.Text.Trim();
-        //        masterItem.InsertDate = DateTime.Now;
-        //        masterItem.InsertTime = DateTime.Now;
-
-        //        DLHelper.Insert(masterItem);
-
-        //        // Save Invoice Details
-        //        foreach (var item in lstInvoice)
-        //        {
-        //            item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
-
-        //            item.InsertDate = DateTime.Now;
-        //            item.InsertTime = DateTime.Now;
-
-        //            DLHelper.Insert(item);
-        //        }
-
-
-        //        MessageHelper.ShowInfomation("Thực hiện thành công.");
-        //        DialogResult = DialogResult.OK;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageHelper.ShowException(ex);
-        //    }
-        //}
 
         private void grcInvoiceDetail_Click(object sender, EventArgs e)
         {

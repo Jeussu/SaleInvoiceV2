@@ -93,6 +93,28 @@ namespace Core.Helper
             }
         }
 
+        public static bool DeleteInvoiceItem(InvoiceItems item)
+        {
+            // SQL DELETE statement to remove an InvoiceItem by its Id
+            string sqlDelete = $"DELETE FROM InvoiceItems WHERE Id = @Id";
+
+            
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                
+                using (var cmd = new SqlCommand(sqlDelete, connection))
+                {
+                    // Adding the Id parameter to the command
+                    cmd.Parameters.AddWithValue("@Id", item.Id);
+
+                    
+                    connection.Open();
+
+                    // Executing the command and checking if any row was affected
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
 
         public static string GetNameDataTable(Type typeData)
         {

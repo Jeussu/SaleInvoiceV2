@@ -2,6 +2,7 @@
 using Core.DL;
 using Core.Helper;
 using Core.Model;
+using DevExpress.XtraReports.UI;
 using SaleInvoiceV2.Common;
 using System;
 using System.Collections.Generic;
@@ -43,35 +44,55 @@ namespace SaleInvoiceV2
         {
             try
             {
-                var selectedInvoice = GetSelectedInvoice();
-                if (selectedInvoice == null)
+                var lstAll = grcMaster.DataSource as List<SalesInvoices>;
+                var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices;
+                if (dtoSelect == null)
                 {
-                    MessageHelper.ShowError("Please select an invoice to delete.");
+                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa");
                     return;
                 }
-
-                // Delete associated invoice items from the database
-                InvoiceDL.DeleteInvoiceItemsByInvoiceNumber(selectedInvoice.InvoiceNumber);
-
-                // Delete the invoice from the database
-                InvoiceDL.DeleteInvoice(selectedInvoice.Id);
-
-                // Update grcMaster
-                var lstAllInvoices = grcMaster.DataSource as List<SalesInvoices>;
-                lstAllInvoices.Remove(selectedInvoice);
-                grcMaster.DataSource = lstAllInvoices;
-                grcMaster.RefreshDataSource();
-
-                // Clear grcDetails as the details of the deleted invoice are no longer relevant
-                grcDetails.DataSource = null;
-                grcDetails.RefreshDataSource();
+               
+                DeleteSalesInvoices(dtoSelect);
+                DeleteInvoiceItem(dtoSelect);
+                btnTimKiem_Click(null,null);
+              
             }
             catch (Exception ex)
             {
+
                 MessageHelper.ShowException(ex);
             }
         }
+        
 
+        public static bool DeleteSalesInvoices(SalesInvoices item)
+        {
+            string sqlDelete = $"DELETE FROM SalesInvoices WHERE Id = @Id";
+
+            using (var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(sqlDelete, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Id", item.Id);
+                    connection.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+        public static bool DeleteInvoiceItem(SalesInvoices item)
+        {
+            string sqlDelete = $"DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
+            using(var connection = Connection.ConnectToSQLDataBase())
+            {
+                using (var cmd = new SqlCommand(sqlDelete, connection))
+                {
+                    cmd.Parameters.AddWithValue("@InvoiceNumber", item.InvoiceNumber);
+                    connection.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
         //Convert.ToInt32(txtInvoiceNumber.EditValue);
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
@@ -82,7 +103,8 @@ namespace SaleInvoiceV2
                 var lstSaleInvoice = InvoiceDL.SearchInVoiceNumber(frDate, toDate) as List<SalesInvoices>;
                 //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
                 grcMaster.DataSource = lstSaleInvoice;
-
+                grcMaster.RefreshDataSource();
+                gridView1_FocusedRowChanged(null, null);
             }
             catch (Exception ex)
             {
@@ -90,6 +112,23 @@ namespace SaleInvoiceV2
             }
         }
 
+        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices;
+            var lstSaleInvoice = new List<InvoiceItems>();
+            if (dtoSelect == null)
+            {
+                grcDetails.DataSource = lstSaleInvoice;
+                grcDetails.RefreshDataSource();
+                return;
+            }
+            lstSaleInvoice = InvoiceDL.SearchInVoiceItemBySaleInvoice(dtoSelect.InvoiceNumber);
+
+            //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
+            grcDetails.DataSource = lstSaleInvoice;
+            grcDetails.RefreshDataSource();
+
+        }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -163,19 +202,7 @@ namespace SaleInvoiceV2
 
         }
 
-        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
-        {
-            var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices;
-            if (dtoSelect == null)
-            {
-                return;
-            }
-            var lstSaleInvoice = InvoiceDL.SearchInVoiceItemBySaleInvoice(dtoSelect.InvoiceNumber);
-
-            //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
-            grcDetails.DataSource = lstSaleInvoice;
-
-        }
+        
 
         private void frmMaster_Load(object sender, EventArgs e)
         {
@@ -187,6 +214,21 @@ namespace SaleInvoiceV2
         {
             OpenEditForm();
             //RefreshData(); // Refresh the data in frmMaster to reflect changes
+        }
+
+        private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var rpt = new frmInvoicePrintReport();
+                //rpt.Print();
+                rpt.ShowPreview();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

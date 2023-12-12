@@ -82,6 +82,7 @@ namespace Core.DL
 
             return lstResult; // Removed the OrderByDescending as InvoiceItems may not have an InvoiceDate field
         }
+
         public static bool DeleteInvoiceItemsByInvoiceNumber(int invoiceNumber)
         {
             string strSql = "DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
@@ -101,6 +102,7 @@ namespace Core.DL
                 }
             }
         }
+        
         public static bool DeleteInvoice(int invoiceId)
         {
             string strSql = "DELETE FROM SalesInvoices WHERE Id = @InvoiceId";

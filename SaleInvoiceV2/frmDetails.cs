@@ -26,7 +26,7 @@ namespace SaleInvoiceV2
 
         }
 
-        private void barButtonItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             try
             {
@@ -85,26 +85,7 @@ namespace SaleInvoiceV2
             return true;
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            try
-            {
-                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItems>;
-                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
-                if (dtoSelect == null)
-                {
-                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa.");
-                    return;
-                }
-                lstAll.Remove(dtoSelect);
-                grcInvoiceDetail.DataSource = lstAll;
-                grcInvoiceDetail.RefreshDataSource();
-            }
-            catch (Exception ex)
-            {
-                MessageHelper.ShowException(ex);
-            }
-        }
+        
 
         private void btnThemMoi_Click(object sender, EventArgs e)
         {
@@ -159,7 +140,26 @@ namespace SaleInvoiceV2
                 throw ex;
             }
         }
-
+        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var lstAll = grcInvoiceDetail.DataSource as List<InvoiceItems>;
+                var dtoSelect = UIControl.GetCurrentDataInGrid(grcInvoiceDetail) as InvoiceItems;
+                if (dtoSelect == null)
+                {
+                    MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa.");
+                    return;
+                }
+                lstAll.Remove(dtoSelect);
+                grcInvoiceDetail.DataSource = lstAll;
+                grcInvoiceDetail.RefreshDataSource();
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.ShowException(ex);
+            }
+        }
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             try
