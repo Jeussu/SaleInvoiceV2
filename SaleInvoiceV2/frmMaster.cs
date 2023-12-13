@@ -160,7 +160,7 @@ namespace SaleInvoiceV2
 
         private SalesInvoices GetSelectedInvoice()
         {
-            // Check if there is any row selected in the grcMaster grid
+            
             if (grcMaster.MainView is DevExpress.XtraGrid.Views.Grid.GridView view && view.SelectedRowsCount > 0)
             {
                 // Get the handle of the first selected row
@@ -175,6 +175,26 @@ namespace SaleInvoiceV2
             return null; // Return null if no row is selected
         }
 
+        private SalesInvoices GetSelectedInvoice1()
+        {
+            
+            if (grcMaster.MainView is DevExpress.XtraGrid.Views.Grid.GridView view && view.SelectedRowsCount > 0)
+            {
+                
+                int selectedRowHandle = view.GetSelectedRows()[0];
+
+                
+                var selectedInvoice = view.GetRow(selectedRowHandle) as SalesInvoices;
+
+                
+                if (selectedInvoice != null)
+                {
+                    return selectedInvoice; 
+                }
+            }
+
+            return null; 
+        }
 
 
         private void grcMaster_Click(object sender, EventArgs e)
@@ -213,22 +233,38 @@ namespace SaleInvoiceV2
         private void btnEdit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             OpenEditForm();
-            //RefreshData(); // Refresh the data in frmMaster to reflect changes
+            
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             try
             {
-                var rpt = new frmInvoicePrintReport();
-                //rpt.Print();
-                rpt.ShowPreview();
-            }
-            catch (Exception)
-            {
+                // Retrieve the selected invoice
+                SalesInvoices selectedInvoice = GetSelectedInvoice1();
+                if (selectedInvoice == null)
+                {
+                    MessageBox.Show("Please select an invoice to print.");
+                    return;
+                }
 
-                throw;
+                // Optionally, retrieve the invoice details if needed
+                var invoiceDetails = InvoiceDL.SearchInVoiceItemBySaleInvoice(selectedInvoice.InvoiceNumber);
+
+                
+                var report = new frmInvoicePrintReport();
+
+                
+                report.SetData(selectedInvoice, invoiceDetails); // For the master data
+                //report.SetDetailDataSource(invoiceDetails); // For the detail data
+                
+                report.ShowPreview();
             }
-        }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("Error occurred while printing: " + ex.Message);
+            }
+        }        
     }
 }
