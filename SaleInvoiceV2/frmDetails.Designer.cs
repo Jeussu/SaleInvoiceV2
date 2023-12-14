@@ -263,6 +263,7 @@
             this.txtInvoiceNumber.Location = new System.Drawing.Point(88, 9);
             this.txtInvoiceNumber.MenuManager = this.barManager1;
             this.txtInvoiceNumber.Name = "txtInvoiceNumber";
+            this.txtInvoiceNumber.Properties.ReadOnly = true;
             this.txtInvoiceNumber.Size = new System.Drawing.Size(100, 20);
             this.txtInvoiceNumber.TabIndex = 1;
             // 

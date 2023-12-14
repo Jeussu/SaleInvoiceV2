@@ -52,13 +52,13 @@ namespace Core.DL
             return lstResult.OrderByDescending(s => s.InvoiceDate).ToList();
         }
 
-        public static List<InvoiceItems> SearchInVoiceItemBySaleInvoice(int invoiceNumber)
+        public static List<InvoiceItems> SearchInVoiceItemBySaleInvoice(string invoiceNumber)
         {
             var lstResult = new List<InvoiceItems>();
             string strSql = string.Format(@"SELECT inv.Id, inv.InvoiceNumber, inv.ProductID, inv.ProductName, 
                                            inv.Quantity, inv.UnitPrice, inv.IntoMoney, inv.TotalMoney
                                     FROM InvoiceItems AS inv                                  
-                                    WHERE inv.InvoiceNumber = {0}", invoiceNumber);
+                                    WHERE inv.InvoiceNumber = '{0}'", invoiceNumber);
 
             using (var connection = Connection.ConnectToSQLDataBase())
             {

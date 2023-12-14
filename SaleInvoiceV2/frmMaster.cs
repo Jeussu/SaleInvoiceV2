@@ -29,7 +29,7 @@ namespace SaleInvoiceV2
             try
             {
                 var frm = new frmDetails();
-                if (frm.ShowDialog() == DialogResult.OK)
+                if (frm.ShowDialog() == DialogResult.OK) // move to new form
                 {
                     btnTimKiem_Click(null, null);
                 }
@@ -44,17 +44,17 @@ namespace SaleInvoiceV2
         {
             try
             {
-                var lstAll = grcMaster.DataSource as List<SalesInvoices>;
-                var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices;
+                var lstAll = grcMaster.DataSource as List<SalesInvoices>;// add grcMaster to datasource as List<>
+                var dtoSelect = UIControl.GetCurrentDataInGrid(grcMaster) as SalesInvoices; // declare dto = assign and call GetCurrentDataInGrid method to get data from grcMaster in SalesInvoices 
                 if (dtoSelect == null)
-                {
+                {// if dto null show message
                     MessageHelper.ShowError("Vui lòng chọn ít nhất một dòng để xóa");
                     return;
                 }
                
-                DeleteSalesInvoices(dtoSelect);
-                DeleteInvoiceItem(dtoSelect);
-                btnTimKiem_Click(null,null);
+                DeleteSalesInvoices(dtoSelect); // call method to delete data from master
+                DeleteInvoiceItem(dtoSelect); // call method to delete data from details
+                btnTimKiem_Click(null,null); // after delete refresh data in gridview by call search method
               
             }
             catch (Exception ex)
@@ -67,23 +67,23 @@ namespace SaleInvoiceV2
 
         public static bool DeleteSalesInvoices(SalesInvoices item)
         {
-            string sqlDelete = $"DELETE FROM SalesInvoices WHERE Id = @Id";
+            string sqlDelete = $"DELETE FROM SalesInvoices WHERE Id = @Id"; // delete query sql by Id
 
-            using (var connection = Connection.ConnectToSQLDataBase())
+            using (var connection = Connection.ConnectToSQLDataBase()) // command sql
             {
-                using (var cmd = new SqlCommand(sqlDelete, connection))
+                using (var cmd = new SqlCommand(sqlDelete, connection)) // opens a connection to the database. 
                 {
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
-                    connection.Open();
-                    return cmd.ExecuteNonQuery() > 0;
+                    cmd.Parameters.AddWithValue("@Id", item.Id); // adds a parameter to the SQL command
+                    connection.Open(); // opens the database connection to execute the command.
+                    return cmd.ExecuteNonQuery() > 0; // It returns the number of rows affected.
                 }
             }
         }
 
         public static bool DeleteInvoiceItem(SalesInvoices item)
         {
-            string sqlDelete = $"DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
-            using(var connection = Connection.ConnectToSQLDataBase())
+            string sqlDelete = $"DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber"; // delete query sql by InvoiceNumber 
+            using (var connection = Connection.ConnectToSQLDataBase())
             {
                 using (var cmd = new SqlCommand(sqlDelete, connection))
                 {
@@ -99,7 +99,7 @@ namespace SaleInvoiceV2
             try
             {
                 var frDate = dteFromday.DateTime.Date;
-                var toDate = dtetoday.DateTime.Date;
+                var toDate = dtetoday.DateTime.Date;// these lines retrieve the date values from two date-edit controls('dteFromday' and 'dtetoday')
                 var lstSaleInvoice = InvoiceDL.SearchInVoiceNumber(frDate, toDate) as List<SalesInvoices>;
                 //var lstInvoiceItems = InvoiceDL.SearchInVoiceNumber(frDate, toDate, invoiceNumber) as List<InvoiceItems>;
                 grcMaster.DataSource = lstSaleInvoice;

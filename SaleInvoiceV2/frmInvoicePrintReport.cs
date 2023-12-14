@@ -30,16 +30,16 @@ namespace SaleInvoiceV2
             var dataSource = new MauInHoaDon();
             dataSource.master = master;
             dataSource.Details = details;
-            var lstSourece = new List<MauInHoaDon>();
-            lstSourece.Add(dataSource);
-            bsShowHoaDon.DataSource = lstSourece;
+            var lstSource = new List<MauInHoaDon>();
+            lstSource.Add(dataSource);
+            bsShowHoaDon.DataSource = lstSource;
         }
     }
 
     public class MauInHoaDon
     {
-        public SalesInvoices master;
-        public List<InvoiceItems> Details;
+        public SalesInvoices master { get; set; }
+        public List<InvoiceItems> Details { get; set; }
         public MauInHoaDon()
         {
             master = new SalesInvoices();

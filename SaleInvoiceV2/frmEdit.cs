@@ -52,7 +52,7 @@ namespace SaleInvoiceV2
                 if (_invoiceToEdit != null)
                 {
                     // Populate form fields with data from _invoiceToEdit
-                    txtInvoiceNumber.EditValue = _invoiceToEdit.InvoiceNumber;
+                    txtInvoiceNumber.Text = _invoiceToEdit.InvoiceNumber;
                     dteNgayBaoCao.DateTime = _invoiceToEdit.InvoiceDate;
                     txtCustomerID.EditValue = _invoiceToEdit.CustomerID;
                     txtCustomerName.Text = _invoiceToEdit.CustomerName;
@@ -71,7 +71,7 @@ namespace SaleInvoiceV2
             }
         }
 
-        private void LoadInvoiceItems(int invoiceNumber)
+        private void LoadInvoiceItems(string invoiceNumber)
         {
             // Fetch InvoiceItems from the database or data source
             var invoiceItems = InvoiceDL.SearchInVoiceItemBySaleInvoice(invoiceNumber);
@@ -179,7 +179,7 @@ namespace SaleInvoiceV2
         {
             var newInvoice = new SalesInvoices
             {
-                InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue),
+                InvoiceNumber = txtInvoiceNumber.Text,
                 InvoiceDate = dteNgayBaoCao.DateTime != DateTime.MinValue ? dteNgayBaoCao.DateTime : DateTime.Now,
                 CustomerID = Convert.ToInt32(txtCustomerID.EditValue),
                 CustomerName = txtCustomerName.Text,
@@ -195,7 +195,7 @@ namespace SaleInvoiceV2
 
         private void UpdateInvoiceFromFormFields(SalesInvoices invoice)
         {
-            invoice.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+            invoice.InvoiceNumber = Convert.ToString(txtInvoiceNumber.Text);
             invoice.InvoiceDate = dteNgayBaoCao.DateTime != DateTime.MinValue ? dteNgayBaoCao.DateTime : DateTime.Now;
             invoice.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
             invoice.CustomerName = txtCustomerName.Text;
@@ -269,7 +269,7 @@ namespace SaleInvoiceV2
                 // Save InvoiceItems
                 foreach (var item in lstInvoice)
                 {
-                    item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+                    item.InvoiceNumber = Convert.ToString(txtInvoiceNumber.Text);
                     if (item.InsertDate < new DateTime(1753, 1, 1))
                         item.InsertDate = DateTime.Now;
                     if (item.InsertTime < new DateTime(1753, 1, 1))

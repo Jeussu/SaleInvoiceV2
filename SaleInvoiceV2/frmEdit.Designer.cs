@@ -260,6 +260,7 @@
             // 
             // txtInvoiceNumber
             // 
+            this.txtInvoiceNumber.Enabled = false;
             this.txtInvoiceNumber.Location = new System.Drawing.Point(88, 9);
             this.txtInvoiceNumber.MenuManager = this.barManager1;
             this.txtInvoiceNumber.Name = "txtInvoiceNumber";

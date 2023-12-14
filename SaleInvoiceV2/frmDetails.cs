@@ -173,7 +173,7 @@ namespace SaleInvoiceV2
                 // Save Master Invoice Information
 
                 var masterItem = new SalesInvoices();
-                masterItem.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+                masterItem.InvoiceNumber = Convert.ToString(txtInvoiceNumber.Text);
                 masterItem.InvoiceDate = dteNgayBaoCao.DateTime.Date;
                 masterItem.CustomerID = Convert.ToInt32(txtCustomerID.EditValue);
                 masterItem.CustomerName = txtCustomerName.Text.Trim();
@@ -186,7 +186,7 @@ namespace SaleInvoiceV2
                 // Save Invoice Details
                 foreach (var item in lstInvoice)
                 {
-                    item.InvoiceNumber = Convert.ToInt32(txtInvoiceNumber.EditValue);
+                    item.InvoiceNumber = Convert.ToString(txtInvoiceNumber.Text);
 
                     item.InsertDate = DateTime.Now;
                     item.InsertTime = DateTime.Now;
@@ -203,6 +203,6 @@ namespace SaleInvoiceV2
                 MessageHelper.ShowException(ex);
             }
         }
-
+        
     }
 }

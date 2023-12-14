@@ -10,7 +10,7 @@ namespace Core.Model
     public partial class SalesInvoices
     {
         public int Id { get; set; }
-        public int InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public int CustomerID { get; set; }
         public string CustomerName { get; set; }
