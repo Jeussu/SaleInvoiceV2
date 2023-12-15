@@ -154,7 +154,7 @@ namespace SaleInvoiceV2
                 MessageHelper.ShowException(ex);
             }
         }
-
+        
         private void txtUnitPrice_Validated(object sender, EventArgs e)
         {
             try

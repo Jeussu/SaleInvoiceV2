@@ -35,15 +35,15 @@ namespace Core.DL
 
                     using (var dr = cmd.ExecuteReader())
                     {
-                        
+
 
                         while (dr.Read())
                         {
                             var invoice = DLHelper.CreatDtoFromDataReader(typeof(SalesInvoices), dr) as SalesInvoices;
-                           
+
 
                             lstResult.Add(invoice);
-                            
+
                         }
                     }
                 }
@@ -82,46 +82,76 @@ namespace Core.DL
 
             return lstResult; // Removed the OrderByDescending as InvoiceItems may not have an InvoiceDate field
         }
-
-        public static bool DeleteInvoiceItemsByInvoiceNumber(int invoiceNumber)
+        public static string GetLastInvoiceNumber()
         {
-            string strSql = "DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
+            string lastInvoiceNumber = "INV000000"; // Default if no invoices are found
+            string query = "SELECT MAX(InvoiceNumber) FROM SalesInvoices";
 
             using (var connection = Connection.ConnectToSQLDataBase())
             {
-                using (var cmd = new SqlCommand(strSql, connection))
+                using (var cmd = new SqlCommand(query, connection))
                 {
-                    cmd.Parameters.AddWithValue("@InvoiceNumber", invoiceNumber);
-
-                    if (connection.State != ConnectionState.Open)
+                    try
                     {
                         connection.Open();
+                        var result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            lastInvoiceNumber = Convert.ToString(result);
+                        }
                     }
-
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-        }
-        
-        public static bool DeleteInvoice(int invoiceId)
-        {
-            string strSql = "DELETE FROM SalesInvoices WHERE Id = @InvoiceId";
-
-            using (var connection = Connection.ConnectToSQLDataBase())
-            {
-                using (var cmd = new SqlCommand(strSql, connection))
-                {
-                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
-
-                    if (connection.State != ConnectionState.Open)
+                    catch (Exception ex)
                     {
-                        connection.Open();
+                        
+                        Console.WriteLine("Error fetching last invoice number: " + ex.Message);
                     }
-
-                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
+
+            return lastInvoiceNumber;
         }
+
+
+
+        //public static bool DeleteInvoiceItemsByInvoiceNumber(int invoiceNumber)
+        //{
+        //    string strSql = "DELETE FROM InvoiceItems WHERE InvoiceNumber = @InvoiceNumber";
+
+        //    using (var connection = Connection.ConnectToSQLDataBase())
+        //    {
+        //        using (var cmd = new SqlCommand(strSql, connection))
+        //        {
+        //            cmd.Parameters.AddWithValue("@InvoiceNumber", invoiceNumber);
+
+        //            if (connection.State != ConnectionState.Open)
+        //            {
+        //                connection.Open();
+        //            }
+
+        //            return cmd.ExecuteNonQuery() > 0;
+        //        }
+        //    }
+        //}
+
+        //public static bool DeleteInvoice(int invoiceId)
+        //{
+        //    string strSql = "DELETE FROM SalesInvoices WHERE Id = @InvoiceId";
+
+        //    using (var connection = Connection.ConnectToSQLDataBase())
+        //    {
+        //        using (var cmd = new SqlCommand(strSql, connection))
+        //        {
+        //            cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
+
+        //            if (connection.State != ConnectionState.Open)
+        //            {
+        //                connection.Open();
+        //            }
+
+        //            return cmd.ExecuteNonQuery() > 0;
+        //        }
+        //    }
+        //}
 
     }
-} 
+}

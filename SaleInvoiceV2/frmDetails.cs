@@ -1,4 +1,5 @@
-﻿using Core.Helper;
+﻿using Core.DL;
+using Core.Helper;
 using Core.Model;
 using DevExpress.Skins;
 using SaleInvoiceV2.Common;
@@ -42,13 +43,26 @@ namespace SaleInvoiceV2
         {
             try
             {
+                // Generate and set the new invoice number
+                txtInvoiceNumber.Text = GenerateNewInvoiceNumber();
+                
             }
             catch (Exception ex)
             {
-
                 MessageHelper.ShowException(ex);
             }
+
         }
+
+        private string GenerateNewInvoiceNumber()
+        {
+            string lastInvoiceNumber = InvoiceDL.GetLastInvoiceNumber();
+            // Extract the numeric part and increment
+            int number = int.Parse(lastInvoiceNumber.Substring(3)) + 1;
+            // Format and return the new invoice number
+            return $"INV{number:000000}";
+        }
+
         List<InvoiceItems> lstInvoice = new List<InvoiceItems>();
         private bool ValidateUI()
         {
